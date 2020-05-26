@@ -26,16 +26,16 @@ if (env === 'production') {
     MYSQL_CONF = {
         host: 'localhost',
         user: 'root',
-        password: 'Mysql_2018',
+        password: '980514',
         port: '3306',
-        database: 'myblog'
+        database: 'w'
     }
 
     // redis
-    REDIS_CONF = {
-        port: 6379,
-        host: '127.0.0.1'
-    }
+    // REDIS_CONF = {
+    //     port: 6379,
+    //     host: '127.0.0.1'
+    // }
 }
 
 module.exports = {

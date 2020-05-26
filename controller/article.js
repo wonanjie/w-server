@@ -3,7 +3,7 @@
  * @Author: wonanjie
  * @Date: 2020-05-25 14:58:41
  * @LastEditors: wonanjie
- * @LastEditTime: 2020-05-26 17:47:38
+ * @LastEditTime: 2020-05-26 22:22:34
  */ 
 
 const {Tool}=require('../model/tool')
@@ -26,8 +26,12 @@ const newArticle=async (body)=>{
     return new SuccessModel('新增文章成功')
 }
 
-const getArticleList= async (body)=>{
-    
+const getArticleList= async (page)=>{
+    let tool=new Tool()
+    if(tool.isEmpty(page)) return new ErrorModel('页码不存在') 
+    const sql=`select * from article limit (${page}-1)*10, 10;`
+    const data = await exec(sql)
+    return new SuccessModel(data,'获取文章列表成功') 
 }
 module.exports={
     newArticle,getArticleList

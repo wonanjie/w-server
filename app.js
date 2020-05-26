@@ -5,7 +5,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
-const redisStore = require('koa-redis')
+// const redisStore = require('koa-redis')
 
 // const index = require('./routes/index')
 // const users = require('./routes/users')
@@ -38,10 +38,10 @@ app.keys = ['W#980514']
 app.use(session({
   cookie: {
     maxAge: 24 * 60 * 60 * 1000 * 30
-  },
-  store: redisStore({
-    all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-  })
+  }
+  // store: redisStore({
+  //   all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+  // })
 }))
 
 // routes
@@ -49,6 +49,7 @@ app.use(session({
 // app.use(users.routes(), users.allowedMethods())
 app.use(user.routes(), user.allowedMethods())
 app.use(article.routes(), article.allowedMethods())
+
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

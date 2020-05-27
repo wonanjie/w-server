@@ -32,20 +32,24 @@ type: post 参数: {id: number(文章id),title:string,content:string}  返回:{m
 
 ### /newColumn
 ```
-type: get 参数: {}  返回:{message: 返回信息 ,errno: 1为修改文章成功 0修改文章失败}
+type: post 参数: {columnName:string}  返回:{message: 返回信息 ,errno: 1为新增专栏成功 0新增专栏失败}
 ```
 
+### /getColumnList
+```
+type: get 参数: {(不需要传参)}  返回:{message: 返回信息 ,errno: 1为新增专栏成功 0新增专栏失败,data:[{columnId:专栏id,columnName:专栏名称}]}
+```
 ### /deleteColumn
 ```
-type: get 参数: {}  返回:{message: 返回信息 ,errno: 1为修改文章成功 0修改文章失败}
+type: post 参数: {columnId: number}  返回:{message: 返回信息 ,errno: 1为删除专栏成功 0删除专栏失败}
 ```
 
 ### /updateColumn
 ```
-type: get 参数: {}  返回:{message: 返回信息 ,errno: 1为修改文章成功 0修改文章失败}
+type: post 参数: {columnId: number,columnName: string}  返回:{message: 返回信息 ,errno: 1为修改专栏成功 0修改专栏失败}
 ```
 
-### /search
+<!-- ### /search
 ```
 type: get 参数: {}  返回:{message: 返回信息 ,errno: 1为修改文章成功 0修改文章失败}
-```
+``` -->

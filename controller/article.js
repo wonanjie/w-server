@@ -3,7 +3,7 @@
  * @Author: wonanjie
  * @Date: 2020-05-25 14:58:41
  * @LastEditors: wonanjie
- * @LastEditTime: 2020-05-27 21:21:53
+ * @LastEditTime: 2020-05-27 21:40:37
  */
 
 const { Tool } = require('../model/tool')
@@ -48,7 +48,12 @@ const deleteArticle = async (body) => {
 
 const updateArticle = async (body) => {
     if (tool.isEmpty(body) || tool.isEmpty(body.id) || tool.isEmpty(body.title) || tool.isEmpty(body.content)) return new ErrorModel('修改文章失败')
-    const sql = `update article set title='${body.title}', content='${body.content}' where id=${body.id};`
+    let sql
+    if (tool.isEmpty(body.columnId)) {
+        sql = `update article set title='${body.title}', content='${body.content}' where id=${body.id};`
+    } else {
+        sql = `update article set title='${body.title}', content='${body.content}',columnId=${body.columnId} where id=${body.id};`
+    }
     const data = await exec(sql)
     return new SuccessModel('修改文章成功')
 }

@@ -4,7 +4,7 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const session = require('koa-generic-session')
+// const session = require('koa-generic-session')
 // const redisStore = require('koa-redis')
 
 // const index = require('./routes/index')
@@ -35,14 +35,14 @@ app.use(async (ctx, next) => {
 })
 
 app.keys = ['W#980514']
-app.use(session({
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000 * 30
-  }
-  // store: redisStore({
-  //   all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
-  // })
-}))
+// app.use(session({
+//   cookie: {
+//     maxAge: 24 * 60 * 60 * 1000 * 30
+//   }
+//   // store: redisStore({
+//   //   all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+//   // })
+// }))
 
 // routes
 // app.use(index.routes(), index.allowedMethods())

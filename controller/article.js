@@ -3,7 +3,7 @@
  * @Author: wonanjie
  * @Date: 2020-05-25 14:58:41
  * @LastEditors: wonanjie
- * @LastEditTime: 2020-05-27 21:40:37
+ * @LastEditTime: 2020-06-03 22:24:05
  */
 
 const { Tool } = require('../model/tool')
@@ -26,10 +26,14 @@ const newArticle = async (body) => {
 
 const getArticleList = async (page) => {
     if (tool.isEmpty(page)) return new ErrorModel('获取文章列表失败')
-    const sql=`select a.*,b.columnName from article a left join column_table b on a.columnId=b.columnId limit ${(page - 1) * 10}, 10;`
+    let sql = `select a.*,b.columnName from article a left join column_table b on a.columnId=b.columnId limit ${(page - 1) * 10}, 10;`
     // const sql = `select * from article limit ${(page - 1) * 10}, 10;`
     const data = await exec(sql)
-    return new SuccessModel(data, '获取文章列表成功')
+    sql=`select id from article`
+    const totalPage = await exec(sql)
+    let res=new SuccessModel(data, '获取文章列表成功')
+    res.totalPage=Math.ceil(totalPage.length/10)
+    return res
 }
 
 const getArticleDetail = async (id) => {
@@ -82,6 +86,37 @@ const updateColumn = async (body) => {
     const data = await exec(sql)
     return new SuccessModel('修改专栏成功')
 }
+
+const search = async (params) => {
+    const sql = `select a.*,b.columnName from article a left join column_table b on a.columnId=b.columnId`
+    const data = await exec(sql)
+    let _data = []
+    console.log(params)
+    if (params.startDate && params.keyword) { //都存在
+        console.log('都存在')
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].createTime > params.startDate && data[i].createTime < params.endDate&&data[i].title.includes(params.keyword)) _data.push(data[i])
+        }
+    } else if (params.startDate && !params.keyword) { //keyword不存在
+        console.log('keyword不存在')
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].createTime > params.startDate && data[i].createTime < params.endDate) _data.push(data[i])
+        }
+    } else if (!params.startDate && params.keyword) { //日期不存在
+        console.log('日期不存在')
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].title.includes(params.keyword)) _data.push(data[i])
+        }
+    } else {   //都不存在
+        return new SuccessModel(data,'查询条件不存在')
+    }
+
+    if(_data.length===0){
+        return new SuccessModel('查询结果不存在')
+    }else{
+        return new SuccessModel(_data,'查询成功')
+    }
+}
 module.exports = {
-    newArticle, getArticleList, getArticleDetail, deleteArticle, updateArticle, newColumn, deleteColumn, getColumnList, updateColumn
+    newArticle, getArticleList, getArticleDetail, deleteArticle, updateArticle, newColumn, deleteColumn, getColumnList, updateColumn, search
 }

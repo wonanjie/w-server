@@ -3,11 +3,11 @@
  * @Author: wonanjie
  * @Date: 2020-05-25 14:57:28
  * @LastEditors: wonanjie
- * @LastEditTime: 2020-05-27 19:56:27
+ * @LastEditTime: 2020-06-03 17:39:30
  */ 
 const router = require('koa-router')()
 
-const {newArticle,getArticleList,getArticleDetail,deleteArticle,updateArticle,newColumn,deleteColumn,getColumnList,updateColumn}=require('../controller/article')
+const {newArticle,getArticleList,getArticleDetail,deleteArticle,updateArticle,newColumn,deleteColumn,getColumnList,updateColumn,search}=require('../controller/article')
 
 router.prefix('/api/article')
 
@@ -56,4 +56,7 @@ router.post('/updateColumn',async function (ctx,next){
     ctx.body=await updateColumn(body)
 })
 
+router.get('/search',async function (ctx,next){
+    ctx.body=await search(ctx.query)
+})
 module.exports = router

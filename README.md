@@ -17,7 +17,7 @@ type: get 参数: {page: number(页码 从1开始传,即每页只展示10个数�
 ```
 ### /getArticleDetail
 ```
-type: get 参数: {id: number(文章id)}  返回:{message: 返回信息 ,errno: 1为获取文章详情成功 0为获取文章详情失败,data:[{id:1,author:'沃南杰',title:'标题',content:'内容',createTime:时间戳,columnId:专栏id,columnName:专栏名称}]
+type: get 参数: {id: number(文章id)}  返回:{message: 返回信息 ,totalPage: number,errno: 1为获取文章详情成功 0为获取文章详情失败,data:[{id:1,author:'沃南杰',title:'标题',content:'内容',createTime:时间戳,columnId:专栏id,columnName:专栏名称}]
 ```
 
 ### /deleteArticle
@@ -49,7 +49,7 @@ type: post 参数: {columnId: number}  返回:{message: 返回信息 ,errno: 1�
 type: post 参数: {columnId: number,columnName: string}  返回:{message: 返回信息 ,errno: 1为修改专栏成功 0修改专栏失败}
 ```
 
-<!-- ### /search
+### /search
 ```
-type: get 参数: {}  返回:{message: 返回信息 ,errno: 1为修改文章成功 0修改文章失败}
-``` -->
+type: get 参数: {date:array, keywrod:string}  返回:{message: 返回信息 ,errno: 1为搜索成功 0搜索失败,data:[{id:1,author:'沃南杰',title:'标题',content:'内容',createTime:时间戳,columnId:专栏id,columnName:专栏名称}]}
+```
